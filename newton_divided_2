@@ -1,0 +1,43 @@
+% Newton's divided difference
+ % Find the approximate value of f(1.5) from
+ % (x,y)= (0,1), (1,e), (2,e^2) & (3,e^3).
+n = input('Enter n for (n+1) nodes, n:  ');
+x = zeros(1,n+1);
+y = zeros(n+1,n+1);
+D=zeros(n,n);
+for i = 0:n
+   fprintf('Enter x(%d) and f(x(%d)) on separate lines:  \n', i, i);
+   x(i+1) = input(' ');
+   y(i+1,1) = input(' ');
+end
+x0 = input('Now enter a point at which to evaluate the polynomial, x = ');
+n = size(x,1);
+if n == 1
+    n = size(x,2);
+end
+%1st y column
+for i = 1:n
+    D(i,1) = y(i);
+end
+%Divided Difference columns column
+for j = 2:n
+    for i = j:n
+       D(i,j)=(D(i,j-1)-D(i-1,j-1))/(x(i)-x(i-j+1));
+    end
+end
+D
+
+C=D(n,n);
+for k=n-1:-1:1
+    C=conv(C,poly(x(k)));
+    m=length(C);
+    C(m)=C(m)+D(k,k)
+end
+C
+
+X=linspace(x(1),x(n),100);%this will  divide our data into 100 points
+Y=polyval(C,X);%ployval returns the value which come in ouput when we put X in C
+
+plot(x,y,'k')
+hold on
+plot(X,Y,'*')
