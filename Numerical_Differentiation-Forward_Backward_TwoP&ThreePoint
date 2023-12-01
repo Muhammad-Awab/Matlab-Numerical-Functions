@@ -1,0 +1,16 @@
+function  first_der()
+
+h=input('Enter step size :')
+x=input('Enter the required x :')
+fun=input('Enter the function :', 's')
+f=inline(fun)
+
+forward_three_point=(-f(x+(2*h))+(4*f(x+h))-3*f(x))/(2*h)
+backward_three_point=(f(x-(2*h))-4*f(x-h)+3*f(x))/(2*h)
+
+forward_two_point=(f(x+h)-f(x))/(h)
+Backward_two_point = (f(x)-f(x-h))/(h)
+centeral = (f(x+h)-f(x-h))/(2*h)
+
+
+end
